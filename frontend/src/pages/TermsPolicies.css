@@ -1,0 +1,25 @@
+.terms-page {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+}
+
+.terms-page h1 {
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 30px;
+}
+
+.terms-page section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.terms-page h2 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+}

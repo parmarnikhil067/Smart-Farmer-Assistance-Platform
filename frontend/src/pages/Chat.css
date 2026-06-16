@@ -1,0 +1,159 @@
+.chat-page {
+    display: flex;
+    height: calc(100vh - 70px);
+    background: #efeae2;
+}
+
+
+/* Sidebar */
+
+.chat-sidebar {
+    width: 320px;
+    background: white;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar-header input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.chat-user {
+    display: flex;
+    gap: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.chat-user:hover,
+.chat-user.active {
+    background: #f0f2f5;
+}
+
+.chat-user img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.chat-user h4 {
+    margin: 0;
+}
+
+.chat-user span {
+    color: gray;
+    font-size: 13px;
+}
+
+
+/* Main */
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Header */
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    background: #f0f2f5;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-header img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+
+/* Messages */
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    word-wrap: break-word;
+}
+
+.received {
+    align-self: flex-start;
+    background: white;
+}
+
+.sent {
+    align-self: flex-end;
+    background: #d9fdd3;
+}
+
+.message span {
+    display: block;
+    font-size: 11px;
+    margin-top: 5px;
+    text-align: right;
+    color: #555;
+}
+
+
+/* Input */
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #f0f2f5;
+}
+
+.chat-input input {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    outline: none;
+}
+
+.chat-input button,
+.file-btn {
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .chat-sidebar {
+        display: none;
+    }
+    .message {
+        max-width: 90%;
+    }
+}
