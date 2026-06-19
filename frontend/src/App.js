@@ -20,6 +20,7 @@ import Chat from './pages/Chatpage'
 import AboutPortal from './pages/AboutPortal'
 import TermsPolicies from './pages/TermsPolicies'
 import Feedback from './pages/Feedback'
+import './pages/Navbar.css'
 
 
 
@@ -565,98 +566,7 @@ function Home() {
     );
 }
 
-// ================= CHAT =================
-// function Chat() {
-//     const [role, setRole] = useState("farmer");
-//     const [selectedUser, setSelectedUser] = useState(null);
-//     const [message, setMessage] = useState("");
-//     const [messages, setMessages] = useState([]);
 
-//     // Dummy users (replace with backend later)
-//     const users = [
-//         { id: 1, name: "Farmer Ram", role: "farmer" },
-//         { id: 2, name: "Buyer Shyam", role: "buyer" },
-//         { id: 3, name: "Farmer Mohan", role: "farmer" },
-//     ];
-
-//     const filteredUsers = users.filter(u => u.role !== role);
-
-//     const sendMessage = () => {
-//         if (!message) return;
-
-//         setMessages([...messages, { text: message, sender: "me" }]);
-//         setMessage("");
-//     };
-
-//     return ( <
-//         div className = "chat-container" >
-
-//         { /* Sidebar */ } <
-//         div className = "chat-sidebar" >
-//         <
-//         h3 > Chats < /h3>
-
-//         { /* Role Toggle */ } <
-//         div className = "role-toggle" >
-//         <
-//         button onClick = {
-//             () => setRole("farmer")
-//         } > Farmer < /button> <
-//         button onClick = {
-//             () => setRole("buyer")
-//         } > Buyer < /button> < /
-//         div >
-
-//         { /* User List */ } {
-//             filteredUsers.map(u => ( <
-//                 div key = { u.id }
-//                 className = "user"
-//                 onClick = {
-//                     () => setSelectedUser(u)
-//                 } > { u.name } <
-//                 /div>
-//             ))
-//         } <
-//         /div>
-
-//         { /* Chat Window */ } <
-//         div className = "chat-box" > {
-//             selectedUser ? ( <
-//                 >
-//                 <
-//                 h3 > { selectedUser.name } < /h3>
-
-//                 <
-//                 div className = "messages" > {
-//                     messages.map((m, i) => ( <
-//                         div key = { i }
-//                         className = { m.sender === "me" ? "msg me" : "msg" } > { m.text } <
-//                         /div>
-//                     ))
-//                 } <
-//                 /div>
-
-//                 <
-//                 div className = "input-box" >
-//                 <
-//                 input value = { message }
-//                 onChange = { e => setMessage(e.target.value) }
-//                 placeholder = "Type message..." /
-//                 >
-//                 <
-//                 button onClick = { sendMessage } > Send < /button> < /
-//                 div > <
-//                 />
-//             ) : ( <
-//                 p > Select a user to start chat < /p>
-//             )
-//         } <
-//         /div>
-
-//         <
-//         /div>
-//     );
-// }
 // ================= ABOUTPAGE =================
 function About() {
 
@@ -1294,28 +1204,22 @@ function ChatBot() {
     );
 }
 // ================= NAVBAR =================
-
-
 function Navbar() {
     const { user, logout } = useAuth();
     const [search, setSearch] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [openMenu, setOpenMenu] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+    const [menuOpen, setMenuOpen] = useState(false);
     // Change
     const {
         t,
         setLanguage,
         language
-    } = useLanguage();
+    } = useLanguage("en");
 
-    // AUTO CLOSE ON PAGE CHANGE
-    useEffect(() => {
-
-        setOpenMenu(false);
-
-    }, [location.pathname]);
+    // Example user
+    // const user = JSON.parse(localStorage.getItem("user"));
 
     // Check login
     useEffect(() => {
@@ -1323,13 +1227,24 @@ function Navbar() {
         setIsLoggedIn(!!token);
     }, []);
 
-    // Logout
     const handleLogout = () => {
         localStorage.removeItem("token");
+        setMenuOpen(false);
         setIsLoggedIn(false);
         navigate("/login");
+        window.location.href = "/";
     };
 
+    const closeMenu = () => {
+        setMenuOpen(false);
+    };
+    const toggleLanguage = () => {
+        setLanguage(
+            language === "en" ?
+            "hi" :
+            "en"
+        );
+    };
     // Search
     const handleSearch = () => {
         if (!search) return;
@@ -1338,123 +1253,273 @@ function Navbar() {
 
 
     return ( <
-        div className = "navbar" >
+        nav className = "navbar" >
 
-        { /* LEFT */ } <
+        { /* Logo */ } <
+        div className = "nav-left" >
+        <
         Link to = "/"
-        className = "logo" > 🌾Smart Farmer < /Link>
-
-        { /* CENTER */ } <
-        div className = "nav-center" >
-        <
-        Link to = "/" > { t.home } < /Link> 
-
-        <
-        Link to = "/dashboard" > { t.dashboard } < /Link>
-
-        <
-        Link to = "/market" > { t.marketplace } < /Link>
-
-
-        <
-        Link to = "/chat" > { t.chat } < /Link> < /
+        className = "logo"
+        onClick = { closeMenu } > 🌾Smart Farmer <
+        /Link> < /
         div >
 
-        { /* RIGHT */ } <
+        { /* Hamburger */ } <
+        button className = "hamburger"
+        onClick = {
+            () => setMenuOpen(!menuOpen)
+        } > ☰
+        <
+        /button>
+
+        { /* Menu */ } <
+        div className = { `nav-menu ${menuOpen ? "active" : ""}` } >
+
+        <
+        Link to = "/"
+        onClick = { closeMenu } > { t.home } <
+        /Link>
+
+        <
+        Link to = "/dashboard"
+        onClick = { closeMenu } > { t.dashboard } <
+        /Link>
+
+        <
+        Link to = "/market"
+        onClick = { closeMenu } > { t.marketplace } <
+        /Link>
+
+        <
+        Link to = "/chat"
+        onClick = { closeMenu } > { t.chat } <
+        /Link> <
         div className = "nav-right" >
 
-        { /* Search */ } <
+        { /* Search */ }
+
+        <
         div className = "search-box" >
         <
         input value = { search }
         onChange = {
             (e) => setSearch(e.target.value)
         }
-        placeholder = "Search crops..." /
-        >
+        placeholder = "Search..." / >
+
         <
-        button onClick = { handleSearch } > Search < /button> < /
+        button className = "search-btn"
+        onClick = { handleSearch } > 🔍
+        <
+        /button> < /
         div >
 
-        <
-        div className = "lang-buttons" >
+        { /* Language Button */ }
 
         <
-        button onClick = {
-            () =>
-            setLanguage("en")
-        } >
-        EN <
+        button className = "language-btn"
+        onClick = { toggleLanguage } > { language === "en" ? "हिंदी" : "English" } <
         /button>
 
         <
-        button onClick = {
-            () =>
-            setLanguage("hi")
-        } >
-        हिंदी <
-        /button>
-
-        <
-        /div>
-
-        { /* MENU */ } <
-        div className = "menu-container" >
-
-        <
-        button className = "menu-btn"
-        onClick = {
-            () => setOpenMenu(!openMenu)
-        } > ☰
-        <
-        /button>
+        /div>  
 
         {
-            openMenu && ( <
-                div className = "dropdown-menu" >
-
-                { /* COMMON LINKS */ } <
-                Link to = "/about" > { t.about } < /Link> <
-                Link to = "/contact" > { t.contact } < /Link> <
-                Link to = "/help" > { t.help } < /Link>
+            user ? ( <
+                button className = "logout-btn"
+                onClick = { handleLogout } > { t.logout } <
+                /button>
+            ) : ( <
+                >
+                <
+                Link to = "/login"
+                onClick = { closeMenu } > { t.login } <
+                /Link>
 
                 <
-                hr / >
-
-                {!user ? ( <
-                        >
-                        <
-                        Link to = "/login" > { t.login } < /Link> <
-                        Link to = "/register" > {
-                            t.register
-                        } < /Link> < / > ) : ( <
-                        >
-                        <
-                        p className = "menu-user" > { user.name }({ user.role }) <
-                        /p>
-
-                        <
-                        Link to = "/dashboard" > { t.dashboard } <
-                        /Link>
-
-                        <
-                        button className = "logout-btn"
-                        onClick = { logout } > { t.logout } <
-                        /button> < / >
-                    )
-                }
-
-                <
-                /div>
+                Link to = "/register"
+                onClick = { closeMenu } > { t.register } <
+                /Link> < / >
             )
         }
 
         <
-        /div>< /
-        div > < /
-        div >
+        /div>
+
+        <
+        /nav>
     );
 }
+
+// function Navbar() {
+//     const { user, logout } = useAuth();
+//     const [search, setSearch] = useState("");
+//     const [isLoggedIn, setIsLoggedIn] = useState(false);
+//     const [OpenMenu, setOpenMenu] = useState(false);
+//     const navigate = useNavigate();
+//     const location = useLocation();
+//     // Change
+//     const {
+//         t,
+//         setLanguage,
+//         language
+//     } = useLanguage();
+
+//     // AUTO CLOSE ON PAGE CHANGE
+//     useEffect(() => {
+
+//         setOpenMenu(false);
+
+//     }, [location.pathname]);
+
+//     // Check login
+//     useEffect(() => {
+//         const token = localStorage.getItem("token");
+//         setIsLoggedIn(!!token);
+//     }, []);
+
+//     // Logout
+//     const handleLogout = () => {
+//         localStorage.removeItem("token");
+//         setIsLoggedIn(false);
+//         navigate("/login");
+//     };
+
+//     // Search
+//     const handleSearch = () => {
+//         if (!search) return;
+//         navigate(`/market?search=${search}`);
+//     };
+
+
+//     return ( <
+//         div className = "navbar" >
+
+//         { /* LEFT */ } <
+//         Link to = "/"
+//         className = "logo" > 🌾Smart Farmer < /Link>
+
+//         { /* CENTER */ } <
+//         div className = "nav-center" >
+//         <
+//         Link to = "/" > { t.home } < /Link> 
+
+//         <
+//         Link to = "/dashboard" > { t.dashboard } < /Link>
+
+//         <
+//         Link to = "/market" > { t.marketplace } < /Link>
+
+
+//         <
+//         Link to = "/chat" > { t.chat } < /Link> < /
+//         div >
+
+//         { /* RIGHT */ } <
+//         div className = "nav-right" >
+
+//         { /* Search */ } <
+//         div className = "search-box" >
+//         <
+//         input value = { search }
+//         onChange = {
+//             (e) => setSearch(e.target.value)
+//         }
+//         placeholder = "Search crops..." /
+//         >
+//         <
+//         button onClick = { handleSearch } > Search < /button> < /
+//         div >
+
+//         <
+//         div className = "lang-buttons" >
+
+//         <
+//         button onClick = {
+//             () =>
+//             setLanguage("en")
+//         } >
+//         EN <
+//         /button>
+
+//         <
+//         button onClick = {
+//             () =>
+//             setLanguage("hi")
+//         } >
+//         हिंदी <
+//         /button>
+
+//         <
+//         /div>
+
+//         { /* MENU */ } <
+//         div className = "menu-container" >
+
+//         <
+//         button className = "menu-btn"
+//         onClick = {
+//             () => setOpenMenu(!OpenMenu)
+//         } > ☰
+//         <
+//         /button>
+
+//         {
+//             OpenMenu && ( <
+//                 div className = "dropdown-menu" >
+
+//                 { /* COMMON LINKS */ } <
+//                 Link to = "/about" > { t.about } < /Link> <
+//                 Link to = "/contact" > { t.contact } < /Link> <
+//                 Link to = "/help" > { t.help } < /Link>
+
+//                 <
+//                 hr / >
+
+//                 {!user ? ( <
+//                         >
+//                         <
+//                         Link to = "/login" > { t.login } < /Link> <
+//                         Link to = "/register" > {
+//                             t.register
+//                         } < /Link> < / > ) : ( <
+//                         >
+//                         <
+//                         p className = "menu-user" > { user.name }({ user.role }) <
+//                         /p>
+
+//                         <
+//                         Link to = "/dashboard" > { t.dashboard } <
+//                         /Link>
+
+//                         <
+//                         button className = "logout-btn"
+//                         onClick = { logout } > { t.logout } <
+//                         /button> < / >
+//                     )
+//                 }
+
+
+//                 <
+//                 /div>
+//             )
+//         }
+
+
+
+//         <
+//         /div>   
+
+
+//         <
+//         /div>
+
+
+//         <
+//         /div>
+
+//     );
+// }
 
 // ================= Footer  =================
 function Footer() {
@@ -1476,7 +1541,8 @@ function Footer() {
         Link to = "/about-portal" > About Portal < /Link> <
         Link to = "/terms-policies" > Terms & Policies < /Link> <
         Link to = "/help" > Help < /Link> <
-        Link to = "/feedback" > Feedback < /Link> <
+        Link to = "/feedback" > Feedback < /Link>  <
+        Link to = "/about" > About Us < /Link><
         Link to = "/contact" > Contact Us < /Link>  < /
         div >
 
