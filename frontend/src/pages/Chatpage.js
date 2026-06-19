@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Chat.css";
 import socket from '../socket'
-import axios from 'axios'
 
 function ChatPage() {
     const [selectedUser, setSelectedUser] = useState(0);
