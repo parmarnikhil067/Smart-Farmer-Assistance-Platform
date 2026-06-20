@@ -440,7 +440,7 @@ function ProductDetails() {
         div className = "product-details" >
         <
         img src = { product.image || "" }
-        /> <
+        / > <
         h2 > { product.name } < /h2> <
         p > ₹{ product.price } < /p> <
         p > { product.location } < /p>
@@ -1207,7 +1207,7 @@ function ChatBot() {
 function Navbar() {
     const { user, logout } = useAuth();
     const [search, setSearch] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLogedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
