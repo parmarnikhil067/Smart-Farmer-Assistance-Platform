@@ -12,9 +12,9 @@ import DashboardCard from './components/dashboard/DashboardCard'
 import AIPredictionCard from './components/dashboard/AIPredictionCard'
 import WeatherCard from './components/dashboard/WeatherCard'
 import MandiRateCard from './components/dashboard/MandiRateCard'
-import {
-    getDashboardStats
-} from "./services/dashboardService";
+// import {
+//     getDashboardStats
+// } from "./services/dashboardService";
 import MarketplaceStore from './pages/MarketplaceStore'
 import Chat from './pages/Chatpage'
 import AboutPortal from './pages/AboutPortal'
@@ -26,7 +26,7 @@ import './pages/Navbar.css'
 
 // ================= API =================
 const API = axios.create({ baseURL: "http://localhost:5000/api" });
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
 
 API.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
@@ -126,7 +126,7 @@ const useAuth = () => useContext(AuthContext);
 
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
 
 
@@ -234,8 +234,8 @@ function Register() {
 // ========== DASHBOARD PAGE ========
 
 function Dashboard() {
-    const [rates, setRates] =
-    useState([]);
+    // const [rates, setRates] =
+    // useState([]);
 
 
     const activities = [
