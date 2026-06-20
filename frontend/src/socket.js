@@ -3,7 +3,7 @@ from "socket.io-client";
 
 const socket =
     io(
-        "http://localhost:5000"
+        "https://smart-farmer-backend-p2ap.onrender.com"
     );
 
 export default socket;
