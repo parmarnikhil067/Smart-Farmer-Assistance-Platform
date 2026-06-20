@@ -20,7 +20,12 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: "https://smart-farmer-assistance-platform-tx.vercel.app",
+        credentials: true,
+    })
+);
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
