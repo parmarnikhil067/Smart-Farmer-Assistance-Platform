@@ -25,8 +25,8 @@ import './pages/Navbar.css'
 
 
 // ================= API =================
-const API = axios.create({ baseURL: "https://smart-farmer-backend-p2ap.onrender.com/api" });
-// const socket = io("http://localhost:5000");
+const API = axios.create({ baseURL: "https://smart-farmer-assistance-platform.onrender.com//api" });
+const socket = io("https://smart-farmer-assistance-platform.onrender.com");
 
 API.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
