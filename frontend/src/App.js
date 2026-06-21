@@ -25,7 +25,7 @@ import './pages/Navbar.css'
 
 
 // ================= API =================
-const API = axios.create({ baseURL: "https://smart-farmer-assistance-platform.onrender.com//api" });
+const API = axios.create({ baseURL: "https://smart-farmer-assistance-platform.onrender.com" });
 const socket = io("https://smart-farmer-assistance-platform.onrender.com");
 
 API.interceptors.request.use((config) => {
@@ -131,13 +131,13 @@ function AuthProvider({ children }) {
 
 
     const login = async(data) => {
-        const res = await API.post("api/auth/login", data);
+        const res = await API.post("/auth/login", data);
         localStorage.setItem("token", res.data.token);
         setUser(res.data);
     };
 
     const register = async(data) => {
-        const res = await API.post("https://smart-farmer-assistance-platform.onrender.com/auth/register", data);
+        const res = await API.post("/auth/register", data);
         localStorage.setItem("token", res.data.token);
         setUser(res.data);
     };
