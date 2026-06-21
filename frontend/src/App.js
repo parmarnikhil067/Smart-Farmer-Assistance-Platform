@@ -131,13 +131,13 @@ function AuthProvider({ children }) {
 
 
     const login = async(data) => {
-        const res = await API.post("/auth/login", data);
+        const res = await API.post("https://smart-farmer-assistance-platform.onrender.com/auth/login", data);
         localStorage.setItem("token", res.data.token);
         setUser(res.data);
     };
 
     const register = async(data) => {
-        const res = await API.post("/auth/register", data);
+        const res = await API.post("https://smart-farmer-assistance-platform.onrender.com/auth/register", data);
         localStorage.setItem("token", res.data.token);
         setUser(res.data);
     };

@@ -13,7 +13,7 @@ export const getDashboardStats =
             const res =
                 await axios.get(
 
-                    "https://smart-farmer-backend-p2ap.onrender.com/api/dashboard/stats",
+                    "https://smart-farmer-assistance-platform.onrender.com//api/dashboard/stats",
 
                     {
 
