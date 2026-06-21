@@ -15,18 +15,13 @@ const server = http.createServer(app);
 // const io = new Server(server, { cors: { origin: "*" } });
 const io = new Server(server, {
     cors: {
-        origin: "https://smart-farmer-assistance-platform-tx.vercel.app",
-        methods: ["GET", "POST"],
-    },
+        origin: "*"
+
+    }
 });
 
 app.use(express.json());
-app.use(
-    cors({
-        origin: "https://smart-farmer-assistance-platform-tx.vercel.app",
-        credentials: true,
-    })
-);
+app.use(cors());
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
